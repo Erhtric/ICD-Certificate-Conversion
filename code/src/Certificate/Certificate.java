@@ -18,7 +18,15 @@ public class Certificate {
     private String P1_1_10;
 
     private String P1_2_1;
-    private String P1_2_1;
+    private String P1_2_2;
+    private String P1_2_3;
+    private String P1_2_4;
+    private String P1_2_5;
+    private String P1_2_6;
+    private String P1_2_7;
+    private String P1_2_8;
+    private String P1_2_9;
+    private String P1_2_10;
 
 
     // Costruttore
