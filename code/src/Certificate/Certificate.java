@@ -1,3 +1,5 @@
+package Certificate;
+
 public class Certificate {
 
     // Costruttore
