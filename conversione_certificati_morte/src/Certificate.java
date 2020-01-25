@@ -1,5 +1,3 @@
-package Certificate;
-
 public class Certificate {
 
     private String year;
