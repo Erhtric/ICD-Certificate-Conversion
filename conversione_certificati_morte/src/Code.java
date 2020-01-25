@@ -12,8 +12,8 @@ public class Code {
 
     //Costruttore
     public Code(String icd10Code){
-        this.icd10Code=icd10;
-        icd11Code=NULL;
+        this.icd10Code=icd10Code;
+        icd11Code=null;
         convType=ConversionType.NotConvertedYet;
     }
 
