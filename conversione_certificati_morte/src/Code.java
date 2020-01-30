@@ -51,4 +51,27 @@ public class Code {
         convType=ConversionType.NoMapping;
     }
 
+    public Code clone(){
+        Code codeCopy=new Code(this.icd10Code);
+        codeCopy.setIcd11Code(this.icd11Code);
+        switch (convType){
+            case NotConvertedYet:
+                codeCopy.setConversionTypeToNotConvertedYet();
+                break;
+
+            case Equivalent:
+                codeCopy.setConversionTypeToEquivalent();
+                break;
+
+            case Subclass:
+                codeCopy.setConversionTypeToSubclass();
+                break;
+
+            case NoMapping:
+                codeCopy.setConversionTypeToNoMapping();
+                break;
+        }
+        return codeCopy;
+    }
+
 }
