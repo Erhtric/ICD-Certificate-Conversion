@@ -1,18 +1,17 @@
-import java.io.File;
-import java.util.Scanner;
+import java.io.*;
 
 public class Tools {
 
-    public static void reader() throws Exception{
-        File file = new File("src/data/cert2017100K.txt");
-        Scanner sc = new Scanner(file);
+    // Fa esattamente quello che dice
+    private static String readALineFromFile(BufferedReader reader) throws Exception{
+        return reader.readLine();
+    }
 
-        // Prima linea con le intestazioni
-        sc.nextLine();
-
-        while (sc.hasNextLine()){
-            System.out.println(sc.nextLine());
-        }
+    public static Certificate createCertificate(BufferedReader reader) throws Exception{
+        String str = readALineFromFile(reader);
+        
+        Certificate certificate = new Certificate(str);
+        return certificate;
     }
 
 }

@@ -1,80 +1,96 @@
+import java.util.List;
+
 public class Certificate {
+
+    private int index = 0;
 
     private String year;
     private String sex;
     private String age;
 
-    // Parte 1.1
-    private Code P1_1_1;
-    private Code P1_1_2;
-    private Code P1_1_3;
-    private Code P1_1_4;
-    private Code P1_1_5;
-    private Code P1_1_6;
-    private Code P1_1_7;
-    private Code P1_1_8;
-    private Code P1_1_9;
-    private Code P1_1_10;
+    private Code[] P = new Code[61];
 
-    // Parte 1.2
-    private Code P1_2_1;
-    private Code P1_2_2;
-    private Code P1_2_3;
-    private Code P1_2_4;
-    private Code P1_2_5;
-    private Code P1_2_6;
-    private Code P1_2_7;
-    private Code P1_2_8;
-    private Code P1_2_9;
-    private Code P1_2_10;
+    public Certificate(String str) {
+        String codes = str.substring(10);
+        setBaseData(str);
 
-    // Parte 1.3
-    private Code P1_3_1;
-    private Code P1_3_2;
-    private Code P1_3_3;
-    private Code P1_3_4;
-    private Code P1_3_5;
-    private Code P1_3_6;
-    private Code P1_3_7;
-    private Code P1_3_8;
-    private Code P1_3_9;
-    private Code P1_3_10;
+        // Solo per debug
+        codes = codes.concat("\t");
+        System.out.println(codes);
 
-    // Parte 1.4
-    private Code P1_4_1;
-    private Code P1_4_2;
-    private Code P1_4_3;
-    private Code P1_4_4;
-    private Code P1_4_5;
-    private Code P1_4_6;
-    private Code P1_4_7;
-    private Code P1_4_8;
-    private Code P1_4_9;
-    private Code P1_4_10;
+        int index = 0;
+        readBlocks(codes);
 
-    // Parte 1.5
-    private Code P1_5_1;
-    private Code P1_5_2;
-    private Code P1_5_3;
-    private Code P1_5_4;
-    private Code P1_5_5;
-    private Code P1_5_6;
-    private Code P1_5_7;
-    private Code P1_5_8;
-    private Code P1_5_9;
-    private Code P1_5_10;
+    }
 
-    //Parte 2
-    private Code P2_1;
-    private Code P2_2;
-    private Code P2_3;
-    private Code P2_4;
-    private Code P2_5;
-    private Code P2_6;
-    private Code P2_7;
-    private Code P2_8;
-    private Code P2_9;
-    private Code P2_10;
+    private void readBlocks(String codes) {
+        String current = "";
 
-    private Code ucod;
+        for(int i=0; i<codes.length()-1; i++){
+            String ch = String.valueOf(codes.charAt(i));
+            String nx = String.valueOf(codes.charAt(i+1));
+
+            if(!ch.equals("\t")) {
+                // Altrimenti vi può essere "...\t\t..."
+                current = current.concat(ch);
+
+                if(nx.equals("\t")) {
+                    // Nel momento in cui si incontra un "\t" termina un blocco, quindi si salva nell'opportuna sezione e si resetta l'attuale valore
+                    setP(current);
+                    current = "";
+                    index++;
+                }
+
+            } else if(ch.equals("\t") && nx.equals("\t")) {
+                setP("");
+                index++;
+            }
+        }
+    }
+
+    public void setP(String str) {
+        this.P[index] = new Code(str);
+    }
+
+    // Da completare...
+    public Code getP1_1() {
+        return this.P[0];
+    }
+
+    private void setBaseData(String str) {
+        String s = str.replace("\t", "");      // Stringa senza alcun carattere \t
+
+        setYear(s.substring(0, 4));
+        setSex(s.substring(4, 5));
+        setAge(s.substring(5, 7));
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public Code getUcod() {
+        return P[60];
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
 }
