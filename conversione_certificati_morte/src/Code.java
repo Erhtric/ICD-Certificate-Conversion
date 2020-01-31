@@ -74,4 +74,43 @@ public class Code {
         return codeCopy;
     }
 
+
+    //Ritorna true se this è un sottoinsieme di otherCode. Non funziona per i numeri romani che indicano i capitoli.
+    public boolean icd10IsUnder(Code otherCode){
+        String otherCodeICD10=otherCode.getIcd10Code();
+        if(isRomanNumber(this.icd10Code)||isRomanNumber(otherCodeICD10)||this.icd10Code.length()==7||this.icd10Code.equals(otherCodeICD10)){
+            //Ci fermiano subito se uno dei due codici è un numero romano, se this è nella forma "D37-D48" o se i due codici sono uguali
+            return false;
+        } else if(otherCodeICD10.length()==7){
+            //Controlliamo il caso in cui otherCode è nella forma "D37-D48"
+            if(this.icd10Code.charAt(0)!=otherCodeICD10.charAt(0)){
+                return false;
+            } else if(Integer.parseInt(otherCodeICD10.substring(1,3))<Integer.parseInt(this.icd10Code.substring(1,3))&&Integer.parseInt(this.icd10Code.substring(1,3))<Integer.parseInt(otherCodeICD10.substring(5))){
+                return true;
+            } else {
+                return false;
+            }
+        } else if(otherCodeICD10.length()==3){
+            //Controlliamo il caso in cui otherCode è nella forma "D37"
+            if(this.icd10Code.length()==5&&this.icd10Code.substring(0,3).equals(otherCodeICD10)){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //Nei casi rimanenti torniamo sempre falso
+            return false;
+        }
+    }
+
+    //Ritorna true se il codice è un numero romano del tipo usato per i nomi dei capitoli
+    private boolean isRomanNumber(String s){
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)!='I'||s.charAt(i)!='V'||s.charAt(i)!='X'){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
