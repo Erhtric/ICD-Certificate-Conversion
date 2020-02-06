@@ -18,9 +18,7 @@ public class Certificate {
         codes = codes.concat("\t");
         System.out.println(codes);
 
-        int index = 0;
         readBlocks(codes);
-
     }
 
     private void readBlocks(String codes) {
@@ -40,7 +38,7 @@ public class Certificate {
                     current = "";
                     index++;
                 }
-
+                
             } else if(ch.equals("\t") && nx.equals("\t")) {
                 setP("");
                 index++;
