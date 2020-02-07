@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class MapNode {
     private Code nodeCode;
@@ -40,5 +42,32 @@ public class MapNode {
             }
         }
         return null;
+    }
+
+    public Iterator childrenIterator(){
+        return new ChildrenIterator(this);
+    }
+
+    //iterator per i figli del nodo
+    private static class ChildrenIterator implements Iterator {
+        private MapNode m;
+        private int n;
+
+        ChildrenIterator(MapNode m){
+            this.m=m;
+            n=0;
+        }
+
+        public boolean hasNext(){
+            return n<m.childrenNodes.size();
+        }
+
+        public Object next() throws NoSuchElementException {
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }else{
+                return m.childrenNodes.get(n++);
+            }
+        }
     }
 }
