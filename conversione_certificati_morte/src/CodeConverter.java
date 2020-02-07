@@ -1,18 +1,21 @@
+import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 public class CodeConverter {
     private MapNode mappingTree;
     private boolean useSubclassGood;
 
-    public CodeConverter(String mapFile){
+    public CodeConverter(String mapFile) throws IOException {
         mappingTree=new MapNode();
         useSubclassGood=false;
         fillTreeFromFile(mapFile);
         setSubclassGoodInTree(mappingTree);
     }
 
-    public CodeConverter(String mapFile, boolean useSubclassGood){
+    public CodeConverter(String mapFile, boolean useSubclassGood) throws IOException {
         mappingTree=new MapNode();
         this.useSubclassGood=useSubclassGood;
         fillTreeFromFile(mapFile);
@@ -21,8 +24,70 @@ public class CodeConverter {
         }
     }
 
-    private void fillTreeFromFile(String mapFile){
+    private void fillTreeFromFile(String mapFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(mapFile), "UTF-8"));
+        reader.readLine();//scarta la prima riga di legenda
+        String data;
+        String icd10;
+        String icd11;
+        String convType;
+        int count, i;
+        while (reader.ready()) {
+            data=reader.readLine();
+            icd10="";
+            icd11="";
+            convType="";
+            count=0;
+            i=0;
+            //salta 10ClassKind e 10DepthInKind
+            while(count<2){
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
+            //leggi icd10Code
+            while(count<3){
+                icd10+=data.charAt(i);
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
+            //salta icd10Chapter, icd10Title, 11ClassKind, 11DepthInKind e ICD-11 FoundationURI
+            while(count<8){
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
+            //leggi Linearization (releaseURI)
+            while(count<9){
+                icd11+=data.charAt(i);
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
+            //salta icd11Code, icd11Chapter, icd11Title e chapterMatch
+            while(count<13){
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
+            //leggi Relation
+            while(count<14){
+                convType+=data.charAt(i);
+                i++;
+                if(data.charAt(i)=='\t'){
+                    count++;
+                }
+            }
 
+            System.out.println(icd10+" - "+icd11+" - "+convType);
+        }
+        reader.close();
     }
 
     //Ricevuto MapNode, cambia convType dei Code di tutti i suoi nodi da Subclass a SubclassGood
