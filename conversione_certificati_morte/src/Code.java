@@ -3,6 +3,7 @@ public class Code {
         NotConvertedYet,
         Equivalent,
         Subclass,
+        SubclassGood,
         NoMapping
     }
 
@@ -47,6 +48,10 @@ public class Code {
         convType=ConversionType.Subclass;
     }
 
+    public void setConversionTypeToSubclassGood(){
+        convType=ConversionType.SubclassGood;
+    }
+
     public void setConversionTypeToNoMapping(){
         convType=ConversionType.NoMapping;
     }
@@ -65,6 +70,10 @@ public class Code {
 
             case Subclass:
                 codeCopy.setConversionTypeToSubclass();
+                break;
+
+            case SubclassGood:
+                codeCopy.setConversionTypeToSubclassGood();
                 break;
 
             case NoMapping:
