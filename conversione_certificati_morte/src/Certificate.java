@@ -56,6 +56,10 @@ public class Certificate {
         this.parts[index] = new Code(str);
     }
 
+    public void updateParts(Code code, int i) {
+        this.parts[i] = code;
+    }
+
     public Code getParts(int number) {
         if(number < 0 || number > 59) {
             System.out.println("Esecuzione del metodo getPart(index) non riuscita: indice inserito non valido, deve essere compreso in [0,59]");
@@ -102,4 +106,13 @@ public class Certificate {
         this.age = age;
     }
 
+    public String toString() {
+        String str = this.getYear() + "\t" + this.getSex() + "\t" + this.getAge() + "\t";
+        for(int i=0; i<61; ++i) {
+            String cod11 = this.getParts(i).getIcd11Code();
+            str.concat(cod11 + "\t");
+        }
+
+        return str;
+    }
 }
