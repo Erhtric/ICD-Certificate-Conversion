@@ -117,7 +117,7 @@ public class Code {
     //Ritorna true se il codice è un numero romano del tipo usato per i nomi dei capitoli
     private boolean isRomanNumber(String s){
         for(int i=0;i<s.length();i++){
-            if(s.charAt(i)!='I'||s.charAt(i)!='V'||s.charAt(i)!='X'){
+            if(s.charAt(i)!='I'&&s.charAt(i)!='V'&&s.charAt(i)!='X'){
                 return false;
             }
         }

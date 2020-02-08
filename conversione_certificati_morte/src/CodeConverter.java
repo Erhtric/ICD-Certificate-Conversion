@@ -24,6 +24,7 @@ public class CodeConverter {
         }
     }
 
+    //Preso un file contenente il mapping, lo usa per riempire l'albero
     private void fillTreeFromFile(String mapFile) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(mapFile), "UTF-8"));
         reader.readLine();//scarta la prima riga di legenda
@@ -32,7 +33,8 @@ public class CodeConverter {
         String icd11;
         String convType;
         int count, i;
-        while (reader.ready()) {
+        Code newCode;
+        while (reader.ready()) {//per ogni riga del file di mapping
             data=reader.readLine();
             icd10="";
             icd11="";
@@ -41,51 +43,68 @@ public class CodeConverter {
             i=0;
             //salta 10ClassKind e 10DepthInKind
             while(count<2){
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
                 }
+                i++;
             }
             //leggi icd10Code
             while(count<3){
-                icd10+=data.charAt(i);
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
+                }else {
+                    icd10+=data.charAt(i);
                 }
+                i++;
             }
             //salta icd10Chapter, icd10Title, 11ClassKind, 11DepthInKind e ICD-11 FoundationURI
             while(count<8){
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
                 }
+                i++;
             }
             //leggi Linearization (releaseURI)
             while(count<9){
-                icd11+=data.charAt(i);
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
+                } else{
+                    icd11+=data.charAt(i);
                 }
+                i++;
             }
             //salta icd11Code, icd11Chapter, icd11Title e chapterMatch
             while(count<13){
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
                 }
+                i++;
             }
             //leggi Relation
             while(count<14){
-                convType+=data.charAt(i);
-                i++;
                 if(data.charAt(i)=='\t'){
                     count++;
+                }else{
+                    convType+=data.charAt(i);
                 }
+                i++;
             }
 
-            System.out.println(icd10+" - "+icd11+" - "+convType);
+            //Crea il nuovo oggetto Code
+            newCode=new Code(icd10);
+            newCode.setIcd11Code(icd11);
+            if(convType.equals("Equivalent")){
+                newCode.setConversionTypeToEquivalent();
+            }else if(convType.equals("Subclass")){
+                newCode.setConversionTypeToSubclass();
+            }else{
+                newCode.setConversionTypeToNoMapping();
+            }
+
+            //System.out.println(newCode.getIcd10Code()+" - "+newCode.getIcd11Code()+" - "+newCode.getConvType());
+
+            //Lo inserisce nell'albero
+            mappingTree.addCode(newCode);
         }
         reader.close();
     }
