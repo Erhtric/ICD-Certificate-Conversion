@@ -1,4 +1,9 @@
-import java.util.List;
+import java.util.NoSuchElementException;
+
+/*
+*   Questo oggetto rappresenta un certificato di morte.
+*   Possiede i campi: ANNO SESSO ETA' oltre a tutti i codici relativi alle cause di morte.
+* */
 
 public class Certificate {
 
@@ -8,14 +13,14 @@ public class Certificate {
     private String sex;
     private String age;
 
-    private Code[] P = new Code[61];
+    // I Code nell'intervallo [0,59] sono i codici relativi alle parti. In posizione 60 vi è l'ucod.
+    private Code[] parts = new Code[61];
 
     public Certificate(String str) {
         String codes = str.substring(10);
-        setBaseData(str);
+        setBaseData(str);                   // Anno, sesso, età vanno subito inseriti
 
-        // Solo per debug
-        codes = codes.concat("\t");
+        codes = codes.concat("\t");         // Modifica al file, blocca il ciclo!
         System.out.println(codes);
 
         readBlocks(codes);
@@ -25,35 +30,41 @@ public class Certificate {
         String current = "";
 
         for(int i=0; i<codes.length()-1; i++){
-            String ch = String.valueOf(codes.charAt(i));
-            String nx = String.valueOf(codes.charAt(i+1));
+            String ch = String.valueOf(codes.charAt(i));        // Carattere attuale
+            String nx = String.valueOf(codes.charAt(i+1));      // Carattere successivo
 
             if(!ch.equals("\t")) {
-                // Altrimenti vi può essere "...\t\t..."
+                // Il caso più banale è da saltare, anche perchè non c'è niente da copiare
                 current = current.concat(ch);
 
                 if(nx.equals("\t")) {
                     // Nel momento in cui si incontra un "\t" termina un blocco, quindi si salva nell'opportuna sezione e si resetta l'attuale valore
-                    setP(current);
+                    setPart(current);
                     current = "";
-                    index++;
+                    index++;        // l'indice va incrementato!
                 }
                 
             } else if(ch.equals("\t") && nx.equals("\t")) {
-                setP("");
-                index++;
+                setPart("");
+                index++;            // Ogni due \t\t vi è un incremento perchè vi è una parte senza codice.
             }
         }
     }
 
-    public void setP(String str) {
-        this.P[index] = new Code(str);
+    // Aggiorna il codice nella posizione segnata dall'indice.
+    private void setPart(String str) {
+        this.parts[index] = new Code(str);
     }
 
-    // Da completare...
-    public Code getP1_1() {
-        return this.P[0];
-    }
+    public Code getParts(int number) {
+        if(number < 0 || number > 59) {
+            System.out.println("Esecuzione del metodo getPart(index) non riuscita: indice inserito non valido, deve essere compreso in [0,59]");
+            return null;
+        } else {
+            return this.parts[number];
+        }
+     }
+
 
     private void setBaseData(String str) {
         String s = str.replace("\t", "");      // Stringa senza alcun carattere \t
@@ -76,18 +87,18 @@ public class Certificate {
     }
 
     public Code getUcod() {
-        return P[60];
+        return parts[60];
     }
 
-    public void setYear(String year) {
+    private void setYear(String year) {
         this.year = year;
     }
 
-    public void setSex(String sex) {
+    private void setSex(String sex) {
         this.sex = sex;
     }
 
-    public void setAge(String age) {
+    private void setAge(String age) {
         this.age = age;
     }
 
