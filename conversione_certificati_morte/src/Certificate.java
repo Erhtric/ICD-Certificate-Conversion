@@ -1,4 +1,4 @@
-import java.util.NoSuchElementException;
+import org.jetbrains.annotations.NotNull;
 
 /*
 *   Questo oggetto rappresenta un certificato di morte.
@@ -13,20 +13,16 @@ public class Certificate {
     private String sex;
     private String age;
 
-    // I Code nell'intervallo [0,59] sono i codici relativi alle parti. In posizione 60 vi è l'ucod.
     private Code[] parts = new Code[61];
 
-    public Certificate(String str) {
-        String codes = str.substring(10);
+    public Certificate(@NotNull String str) {
+        String codes = str.substring(9);
         setBaseData(str);                   // Anno, sesso, età vanno subito inseriti
-
-        codes = codes.concat("\t");         // Modifica al file, blocca il ciclo!
-        System.out.println(codes);
-
+        codes =  codes + "\n";
         readBlocks(codes);
     }
 
-    private void readBlocks(String codes) {
+    private void readBlocks(@NotNull String codes) {
         String current = "";
 
         for(int i=0; i<codes.length()-1; i++){
@@ -42,10 +38,14 @@ public class Certificate {
                     setPart(current);
                     current = "";
                     index++;        // l'indice va incrementato!
+                } else if(nx.equals("\n")) {
+                    // Quando si incontra un carattere newline termina una riga
+                    setPart(current);
                 }
                 
             } else if(ch.equals("\t") && nx.equals("\t")) {
-                setPart("");
+                // NVC - Not Valid Code
+                setPart("NVC");
                 index++;            // Ogni due \t\t vi è un incremento perchè vi è una parte senza codice.
             }
         }
@@ -56,12 +56,12 @@ public class Certificate {
         this.parts[index] = new Code(str);
     }
 
-    public void updateParts(Code code, int i) {
-        this.parts[i] = code;
+    public void updateParts(Code code, int number) {
+        this.parts[number] = code;
     }
 
-    public Code getParts(int number) {
-        if(number < 0 || number > 59) {
+    public Code getCodeFromIndex(int number) {
+        if(number < 0 || number > 60) {
             System.out.println("Esecuzione del metodo getPart(index) non riuscita: indice inserito non valido, deve essere compreso in [0,59]");
             return null;
         } else {
@@ -70,7 +70,7 @@ public class Certificate {
      }
 
 
-    private void setBaseData(String str) {
+    private void setBaseData(@NotNull String str) {
         String s = str.replace("\t", "");      // Stringa senza alcun carattere \t
 
         setYear(s.substring(0, 4));
@@ -90,10 +90,6 @@ public class Certificate {
         return age;
     }
 
-    public Code getUcod() {
-        return parts[60];
-    }
-
     private void setYear(String year) {
         this.year = year;
     }
@@ -106,11 +102,21 @@ public class Certificate {
         this.age = age;
     }
 
-    public String toString() {
-        String str = this.getYear() + "\t" + this.getSex() + "\t" + this.getAge() + "\t";
-        for(int i=0; i<61; ++i) {
-            String cod11 = this.getParts(i).getIcd11Code();
-            str.concat(cod11 + "\t");
+    public String toStringICD11() {
+        String str = this.getYear() + "\t" + this.getSex() + "\t" + this.getAge();
+        for(int i=0; i<61; i++) {
+            String cod11 = this.getCodeFromIndex(i).getIcd11Code();
+            str = str + " " + "P" + (i+1) + ": " + cod11 + " ";
+        }
+
+        return str;
+    }
+
+    public String toStringICD10() {
+        String str = this.getYear() + "\t" + this.getSex() + "\t" + this.getAge();
+        for(int i=0; i<61; i++) {
+            String cod10 = this.getCodeFromIndex(i).getIcd10Code();
+            str = str + " " + "P" + (i+1) + ": " + cod10 + " ";
         }
 
         return str;

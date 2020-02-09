@@ -1,41 +1,31 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
+
+/**
+ * Questa classe rappresenta un convertitore di certificati da ICD-10 a ICD-11.
+ * Necessita un convertitore di codici e una stringa da cui estrarre un certificato
+ */
 
 public class CertificateConverter {
 
-    // path = "src/data/cert2017100K.txt";
-    public CertificateConverter(String path) throws IOException{
+    Certificate certificate;
 
-        File file = new File(path);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        File fileOutput = new File("src/data/cert2017icd11.txt");
-        BufferedWriter out = new BufferedWriter(new FileWriter(fileOutput, true));
-
-        String header = reader.readLine() + "\n";
-
-        while(!reader.readLine().isEmpty()) {
+    public CertificateConverter(CodeConverter converter, @NotNull String str) throws IOException{
 
             // Prima creiamo un certificato contenente i codici icd-10
-            Certificate cer = new Certificate(reader.readLine());
-            // Generiamo il convertitore
-            CodeConverter converter = new CodeConverter("src/data/10To11MapToOneCategory.txt");
+             this.certificate = new Certificate(str);
+             System.out.println(certificate.toStringICD10());
 
             // Convertiamoli in icd-11
-            for(int i=0; i<61; ++i) {
-                cer.updateParts(converter.convert(cer.getParts(i)), i);
-                if(i == 60) cer.updateParts(converter.convert(cer.getUcod()), i);
+            for(int i=0; i<61; i++) {
+                 if(!certificate.getCodeFromIndex(i).getIcd10Code().equals("NVC")) {
+                    certificate.updateParts(converter.convert(certificate.getCodeFromIndex(i)), i);
+                }
             }
-
-            // Scriviamo su file
-            out.write(header);
-            writeStringToFile(cer, out);
-        }
-
-        reader.close();
-        out.close();
     }
 
-    private void writeStringToFile(Certificate cer, BufferedWriter out) throws IOException {
-        String str = cer.toString();
-        out.write(str + "\n");
+    public Certificate getCertificate() {
+        return this.certificate;
     }
 }
