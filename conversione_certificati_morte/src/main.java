@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.NoSuchElementException;
 
 public class main {
     public static void main(String[] args) throws Exception {
@@ -12,9 +13,15 @@ public class main {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         System.out.println(reader.readLine());          // intestazione
 
+        int count = 1;
         // Non va
         while (reader.ready()) {
-            CertificateConverter c = new CertificateConverter(test, reader.readLine());
+            try {
+                CertificateConverter c = new CertificateConverter(test, reader.readLine());
+            } catch (NoSuchElementException e) {
+                System.out.println("Codice non riconosciuto nella conversione per il certificato n°: " + count);
+            }
+            count++;
         }
         reader.close();
     }

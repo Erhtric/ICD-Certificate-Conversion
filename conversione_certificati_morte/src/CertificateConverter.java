@@ -12,20 +12,17 @@ public class CertificateConverter {
 
     Certificate certificate;
 
-    public CertificateConverter(CodeConverter converter, @NotNull String str) {
+    public CertificateConverter(CodeConverter converter, @NotNull String str) throws NoSuchElementException {
 
         // Prima creiamo un certificato contenente i codici icd-10
         this.certificate = new Certificate(str);
         // Convertiamoli in icd-11
 
-        try {
-            for(int i=0; i<61; i++) {
-                if(!certificate.getCodeFromIndex(i).getIcd10Code().equals("NVC")) {
-                    certificate.updateParts(converter.convert(certificate.getCodeFromIndex(i)), i);
-                }
+        for(int i=0; i<61; i++) {
+            if(!certificate.getCodeFromIndex(i).getIcd10Code().equals("NVC")) {
+                certificate.updateParts(converter.convert(certificate.getCodeFromIndex(i)), i);
             }
-        } catch (NoSuchElementException ignored) {}
-
+        }
     }
 
     public Certificate getCertificate() {
