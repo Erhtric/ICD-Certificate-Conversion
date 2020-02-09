@@ -35,12 +35,12 @@ public class Certificate {
 
                 if(nx.equals("\t")) {
                     // Nel momento in cui si incontra un "\t" termina un blocco, quindi si salva nell'opportuna sezione e si resetta l'attuale valore
-                    setPart(current);
+                    setPart(normalization(current));
                     current = "";
                     index++;        // l'indice va incrementato!
                 } else if(nx.equals("\n")) {
                     // Quando si incontra un carattere newline termina una riga
-                    setPart(current);
+                    setPart(normalization(current));
                 }
                 
             } else if(ch.equals("\t") && nx.equals("\t")) {
@@ -49,6 +49,23 @@ public class Certificate {
                 index++;            // Ogni due \t\t vi è un incremento perchè vi è una parte senza codice.
             }
         }
+    }
+
+    private String normalization(String str) {
+        String res = str;
+        if(!isRomanNumber(str) && str.length() > 3) {
+            res = str.substring(0, 3) + '.' + str.substring(3);
+        }
+        return res;
+    }
+
+    private boolean isRomanNumber(String s){
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)!='I'&&s.charAt(i)!='V'&&s.charAt(i)!='X'){
+                return false;
+            }
+        }
+        return true;
     }
 
     // Aggiorna il codice nella posizione segnata dall'indice.

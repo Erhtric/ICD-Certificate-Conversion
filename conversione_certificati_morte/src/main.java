@@ -12,7 +12,7 @@ public class main {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         System.out.println(reader.readLine());          // intestazione
 
-        // Non va 
+        // Non va
         while (reader.ready()) {
             CertificateConverter c = new CertificateConverter(test, reader.readLine());
         }
