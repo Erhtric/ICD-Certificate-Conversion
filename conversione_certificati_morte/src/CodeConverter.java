@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
 
 public class CodeConverter {
     private MapNode mappingTree;
@@ -137,7 +138,7 @@ public class CodeConverter {
         }
     }
 
-    public Code convert(Code code){
+    public Code convert(Code code) throws NoSuchElementException {
         return mappingTree.findAndReturnCode(code);
     }
 

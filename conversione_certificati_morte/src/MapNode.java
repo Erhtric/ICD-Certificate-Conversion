@@ -32,8 +32,8 @@ public class MapNode {
     }
 
     //Riceve un oggetto Code contente un codice icd10, ne ritorna uno nuovo contente il codice in icd10, il codice in icd11 corrispondente (se esiste) ed il tipo di conversione effettuata
-    //Ritorna null e manda un messaggio in output se non trova il codice (DA SOSTITUIRE CON UNA EXCEPTION)
-    public Code findAndReturnCode(Code code){
+    //Se non trova il codice lancia una NoSuchElementException
+    public Code findAndReturnCode(Code code) throws NoSuchElementException {
         for(int i=0;i<childrenNodes.size();i++){
             if(code.getIcd10Code().equals(childrenNodes.get(i).getNodeCode().getIcd10Code())){
                 return childrenNodes.get(i).getNodeCode().clone();
@@ -41,7 +41,7 @@ public class MapNode {
                 return childrenNodes.get(i).findAndReturnCode(code);
             }
         }
-        return null;
+        throw new NoSuchElementException();
     }
 
     public Iterator childrenIterator(){
