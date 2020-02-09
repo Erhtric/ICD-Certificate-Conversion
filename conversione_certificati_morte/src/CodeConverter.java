@@ -139,7 +139,12 @@ public class CodeConverter {
     }
 
     public Code convert(Code code) throws NoSuchElementException {
-        return mappingTree.findAndReturnCode(code);
+        try {
+            return mappingTree.findAndReturnCode(code);
+        }catch (NoSuchElementException e){
+            System.out.prinln("Impossibile convertire il codice \""+code.getIcd10Code()+"\", il codice non è stato riconosciuto.");
+            throw e;
+        }
     }
 
     public boolean usesSubclassGood(){
