@@ -45,12 +45,15 @@ public class Certificate {
                 
             } else if(ch.equals("\t") && nx.equals("\t")) {
                 // NVC - Not Valid Code
-                setPart("NVC");
+                setPart("");
                 index++;            // Ogni due \t\t vi è un incremento perchè vi è una parte senza codice.
             }
         }
     }
 
+    // Questo metodo serve per poter rendere i certificati utilizzabili dal convertitore
+    // - ANM e i numeri romani rimarranno tali e quali;
+    // - ANMZ -> ANM.Z
     private String normalization(String str) {
         String res = str;
         if(!isRomanNumber(str) && str.length() > 3) {
@@ -68,7 +71,6 @@ public class Certificate {
         return true;
     }
 
-    // Aggiorna il codice nella posizione segnata dall'indice.
     private void setPart(String str) {
         this.parts[index] = new Code(str);
     }

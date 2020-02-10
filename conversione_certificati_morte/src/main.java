@@ -14,7 +14,6 @@ public class main {
         System.out.println(reader.readLine());          // intestazione
 
         int count = 1;
-        // Non va
         while (reader.ready()) {
             try {
                 CertificateConverter c = new CertificateConverter(test, reader.readLine());
