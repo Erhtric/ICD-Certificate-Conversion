@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class main {
@@ -11,12 +12,18 @@ public class main {
 
         File file = new File("..\\cert2017100k.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        System.out.println(reader.readLine());          // intestazione
+        reader.readLine();          // intestazione
+
+        Certificate[] listOfCertificates = new Certificate[100001];
 
         int count = 1;
         while (reader.ready()) {
             try {
                 CertificateConverter c = new CertificateConverter(test, reader.readLine());
+                listOfCertificates[count] = c.getCertificate();
+                String icd11Certificate = c.getCertificate().toStringICD11();
+                System.out.print("Certificato numero: " + count);
+                System.out.print(" " + icd11Certificate + "\n");
             } catch (NoSuchElementException e) {
                 System.out.println("Codice non riconosciuto nella conversione per il certificato n°: " + count);
             }

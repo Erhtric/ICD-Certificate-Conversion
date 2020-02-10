@@ -5,13 +5,13 @@ import java.util.NoSuchElementException;
  * Questo classe rappresenta l'oggetto CertificateConverter.
  * Crea un certificato i cui campi codice posseggono sia il formato icd-10 che icd-11.
  * Il certificato è creato a partire da una stringa, quale deve necessariamente estratta nel formato di un certificato di un certificato di morte
- *      YEAR SEX AGE P_1_1_1 P_1_1_2 ... P_2_10 UCOD
+ *      YEAR\tSEX\tAGE\tP_1_1_1\tP_1_1_2\t...\tP_2_10\tUCOD
  * L'oggetto una volta creato avrà il certificato compilato opportunamente
  */
 
 public class CertificateConverter {
 
-    Certificate certificate;
+    private Certificate certificate;
 
     /**
      * Costruttore per CertificateConverter

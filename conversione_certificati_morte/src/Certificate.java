@@ -122,7 +122,7 @@ public class Certificate {
     }
 
     public String toStringICD11() {
-        String str = this.getYear() + "\t" + this.getSex() + "\t" + this.getAge();
+        String str = "YEAR: " + this.getYear() + "\t" + "SEX: " + this.getSex() + "\t" + "AGE: " + this.getAge();
         for(int i=0; i<61; i++) {
             String cod11 = this.getCodeFromIndex(i).getIcd11Code();
             str = str + " " + "P" + (i+1) + ": " + cod11 + " ";
