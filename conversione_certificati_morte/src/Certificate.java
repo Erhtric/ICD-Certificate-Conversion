@@ -42,7 +42,6 @@ public class Certificate {
                 }
                 
             } else if(ch.equals("\t") && nx.equals("\t")) {
-                // NVC - Not Valid Code
                 setPart("");
                 index++;            // Ogni due \t\t vi è un incremento perchè vi è una parte senza codice.
             }
@@ -78,7 +77,7 @@ public class Certificate {
     }
 
     public Code getCodeFromIndex(int number) {
-        if(number < 0 || number > 60) {
+        if(number < 0 || number > 61) {
             System.out.println("Esecuzione del metodo getPart(index) non riuscita: indice inserito non valido, deve essere compreso in [0,59]");
             return null;
         } else {
