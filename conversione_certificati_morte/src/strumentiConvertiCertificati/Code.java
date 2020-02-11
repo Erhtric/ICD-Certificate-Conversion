@@ -1,5 +1,7 @@
+package strumentiConvertiCertificati;
+
 public class Code {
-    enum ConversionType {
+    public static enum ConversionType {
         NotConvertedYet,
         Equivalent,
         Subclass,

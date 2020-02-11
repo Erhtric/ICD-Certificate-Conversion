@@ -1,3 +1,4 @@
+package strumentiConvertiCertificati;
 /*
 *   Questo oggetto rappresenta un certificato di morte.
 *   Possiede i campi: ANNO SESSO ETA' oltre a tutti i codici relativi alle cause di morte.

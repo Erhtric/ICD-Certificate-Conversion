@@ -1,8 +1,10 @@
+import strumentiConvertiCertificati.*;
+
 import java.io.*;
 import java.time.LocalTime;
 import java.util.NoSuchElementException;
 
-public class main {
+public class ConvertiCertificatiInICD11 {
     public static void main(String[] args) throws Exception {
         if(args.length==0){
             System.out.println("Non è stato specificato il nome del file da convertire.\nUsare \"nomeprogramma -help\" per un aiuto su come usare il programma.");
