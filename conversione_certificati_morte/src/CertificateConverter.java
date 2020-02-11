@@ -1,4 +1,3 @@
-import org.jetbrains.annotations.NotNull;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,28 +10,24 @@ import java.util.NoSuchElementException;
 
 public class CertificateConverter {
 
-    private Certificate certificate;
+    private CodeConverter converter;
 
     /**
      * Costruttore per CertificateConverter
      * @param converter
-     * @param str
-     * @throws NoSuchElementException nel caso non vi sia una corrispondenza al codice icd-10 passato
      */
-    public CertificateConverter(@NotNull CodeConverter converter, @NotNull String str) throws NoSuchElementException {
+    public CertificateConverter(CodeConverter converter){
+        this.converter=converter;
+    }
 
-        // Prima creiamo un certificato contenente i codici icd-10
-        this.certificate = new Certificate(str);
-
+    //Riceve un certificato, converte tutti i suoi codici. Se un codice non esiste, lancia NoSuchElementException
+    public void convert(Certificate c) throws NoSuchElementException {
         // Ogni codice deve essere tradotto. I codici vuoti non vengono passati al convertitore.
         for(int i=0; i<61; i++) {
-            if(!certificate.getCodeFromIndex(i).getIcd10Code().isEmpty()) {
-                certificate.updateParts(converter.convert(certificate.getCodeFromIndex(i)), i);
+            if (!c.getCodeFromIndex(i).getIcd10Code().isEmpty()) {
+                c.updateParts(converter.convert(c.getCodeFromIndex(i)), i);
             }
         }
     }
 
-    public Certificate getCertificate() {
-        return this.certificate;
-    }
 }

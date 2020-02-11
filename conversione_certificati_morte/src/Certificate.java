@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.NotNull;
-
 /*
 *   Questo oggetto rappresenta un certificato di morte.
 *   Possiede i campi: ANNO SESSO ETA' oltre a tutti i codici relativi alle cause di morte.
@@ -15,14 +13,14 @@ public class Certificate {
 
     private Code[] parts = new Code[61];
 
-    public Certificate(@NotNull String str) {
+    public Certificate(String str) {
         String codes = str.substring(9);
         setBaseData(str);                   // Anno, sesso, età vanno subito inseriti
         codes =  codes + "\n";
         readBlocks(codes);
     }
 
-    private void readBlocks(@NotNull String codes) {
+    private void readBlocks(String codes) {
         String current = "";
 
         for(int i=0; i<codes.length()-1; i++){
@@ -89,7 +87,7 @@ public class Certificate {
      }
 
 
-    private void setBaseData(@NotNull String str) {
+    private void setBaseData(String str) {
         String s = str.replace("\t", "");      // Stringa senza alcun carattere \t
 
         setYear(s.substring(0, 4));
