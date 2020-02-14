@@ -144,7 +144,7 @@ public class CodeConverter {
         try {
             return mappingTree.findAndReturnCode(code);
         }catch (NoSuchElementException e){
-            System.out.println("Impossibile convertire il codice \""+code.getIcd10Code()+"\", il codice non è stato riconosciuto.");
+            System.out.println("Impossibile convertire il codice \""+code.getIcd10Code()+"\": il codice non e' stato riconosciuto.");
             throw e;
         }
     }
