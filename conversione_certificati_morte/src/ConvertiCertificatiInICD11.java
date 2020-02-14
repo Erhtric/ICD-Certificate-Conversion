@@ -85,8 +85,6 @@ public class ConvertiCertificatiInICD11 {
         long sommatoriaDimensioneCertificatiEquivalent=0;
         long sommatoriaDimensioneCertificatiSubclassGood=0;
         long sommatoriaDimensioneCertificatiSubclass=0;
-        long sommatoriaCodiciSubclassGoodNeiCertificatiSubclassGood=0;
-        long sommatoriaCodiciSubclassNeiCertificatiSubclass=0;
         long sommatoriaDecillesimiCodiciSubclassGoodInCertificatiDiTipoPeggioreSubclassGood=0;
         long sommatoriaDecillesimiCodiciSubclassInCertificatiDiTipoPeggioreSubclass=0;
 
@@ -112,14 +110,12 @@ public class ConvertiCertificatiInICD11 {
                             numeroCertificatiSubclassGood++;
                             sommatoriaDecillesimiCodiciSubclassGoodInCertificatiDiTipoPeggioreSubclassGood+=((double)countSubclassGood(cert))/getCertificateDimension(cert)*10000;
                             sommatoriaDimensioneCertificatiSubclassGood+=getCertificateDimension(cert);
-                            sommatoriaCodiciSubclassGoodNeiCertificatiSubclassGood+=countSubclassGood(cert);
                             break;
 
                         case Subclass:
                             numeroCertificatiSubclass++;
                             sommatoriaDecillesimiCodiciSubclassInCertificatiDiTipoPeggioreSubclass+=((double)countSubclass(cert))/getCertificateDimension(cert)*10000;
                             sommatoriaDimensioneCertificatiSubclass+=getCertificateDimension(cert);
-                            sommatoriaCodiciSubclassNeiCertificatiSubclass+=countSubclass(cert);
                             break;
                     }
                     //stampo il certificato sul file di output
@@ -162,9 +158,6 @@ public class ConvertiCertificatiInICD11 {
         double DimensioneMediaCertificatiEquivalent=((double)sommatoriaDimensioneCertificatiEquivalent)/numeroCertificatiEquivalent;
         double DimensioneMediaCertificatiSubclassGood=((double)sommatoriaDimensioneCertificatiSubclassGood)/numeroCertificatiSubclassGood;
         double DimensioneMediaCertificatiSubclass=((double)sommatoriaDimensioneCertificatiSubclass)/numeroCertificatiSubclass;
-        //double PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood=((double)sommatoriaCodiciSubclassGoodNeiCertificatiSubclassGood)/numeroCertificatiSubclassGood;
-        //double PercentualeDiCodiciSubclassNeiCertificatiSubclass=((double)sommatoriaCodiciSubclassNeiCertificatiSubclass)/numeroCertificatiSubclass;
-        System.out.println(sommatoriaDecillesimiCodiciSubclassGoodInCertificatiDiTipoPeggioreSubclassGood);
         double PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood=((double)sommatoriaDecillesimiCodiciSubclassGoodInCertificatiDiTipoPeggioreSubclassGood)/(numeroCertificatiSubclassGood*100);
         double PercentualeDiCodiciSubclassNeiCertificatiSubclass=((double)sommatoriaDecillesimiCodiciSubclassInCertificatiDiTipoPeggioreSubclass)/(numeroCertificatiSubclass*100);
 
