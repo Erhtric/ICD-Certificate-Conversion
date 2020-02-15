@@ -1,6 +1,7 @@
 import strumentiConvertiCertificati.*;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.NoSuchElementException;
 
@@ -161,64 +162,67 @@ public class ConvertiCertificatiInICD11 {
         double PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood=((double)sommatoriaDecillesimiCodiciSubclassGoodInCertificatiDiTipoPeggioreSubclassGood)/(numeroCertificatiSubclassGood*100);
         double PercentualeDiCodiciSubclassNeiCertificatiSubclass=((double)sommatoriaDecillesimiCodiciSubclassInCertificatiDiTipoPeggioreSubclass)/(numeroCertificatiSubclass*100);
 
+        //per la formattazione delle percentuali nell'output
+        DecimalFormat numberFormat = new DecimalFormat("#0.000");
+
         //scrivo statistiche in standard output
         System.out.println("\n\n\n");
-        System.out.println("Numero certificati tradotti correttamente:\t\t"+numeroCertificatiTradottiCorrettamente+"\t("+PercentualeCertificatiTradottiCorrettamente+"% sul totale)");
-        System.out.println("Numero certificati scartati:\t\t\t\t"+numeroCertificatiScartati+"\t("+PercentualeCertificatiScartati+"% sul totale)");
-        System.out.println("Numero certificati scartati per mancanza di mapping:\t"+numeroCertificatiScartatiPerNoMapping+"\t("+PercentualeCertificatiScartatiPerNoMappingFraScartati+"% dei certificati scartati)");
-        System.out.println("Numero certificati scartati per codice inesistente:\t"+numeroCertificatiScartatiPerCodiceInesistente+"\t("+PercentualeCertificatiScartatiPerCodiceInesistenteFraScartati+"% dei certificati scartati)");
+        System.out.println("Numero certificati tradotti correttamente:\t\t"+numeroCertificatiTradottiCorrettamente+"\t("+numberFormat.format(PercentualeCertificatiTradottiCorrettamente)+"% sul totale)");
+        System.out.println("Numero certificati scartati:\t\t\t\t"+numeroCertificatiScartati+"\t("+numberFormat.format(PercentualeCertificatiScartati)+"% sul totale)");
+        System.out.println("Numero certificati scartati per mancanza di mapping:\t"+numeroCertificatiScartatiPerNoMapping+"\t("+numberFormat.format(PercentualeCertificatiScartatiPerNoMappingFraScartati)+"% dei certificati scartati)");
+        System.out.println("Numero certificati scartati per codice inesistente:\t"+numeroCertificatiScartatiPerCodiceInesistente+"\t("+numberFormat.format(PercentualeCertificatiScartatiPerCodiceInesistenteFraScartati)+"% dei certificati scartati)");
         System.out.println("Numero certificati totali:\t\t\t\t"+numeroTotaleCertificati);
 
         System.out.println("\n");
-        System.out.println("Numero certificati con tipo di conversione peggiore Equivalent:\t\t"+numeroCertificatiEquivalent+"\t("+PercentualeCertificatiEquivalentFraCorretti+"% dei certificati tradotti correttamente)");
-        if(includeSG)System.out.println("Numero certificati con tipo di conversione peggiore SubclassGood:\t"+numeroCertificatiSubclassGood+"\t("+PercentualeCertificatiSubclassGoodFraCorretti+"% dei certificati tradotti correttamente)");
-        System.out.println("Numero certificati con tipo di conversione peggiore Subclass:\t\t"+numeroCertificatiSubclass+"\t("+PercentualeCertificatiSubclassFraCorretti+"% dei certificati tradotti correttamente)");
+        System.out.println("Numero certificati con tipo di conversione peggiore Equivalent:\t\t"+numeroCertificatiEquivalent+"\t("+numberFormat.format(PercentualeCertificatiEquivalentFraCorretti)+"% dei certificati tradotti correttamente)");
+        if(includeSG)System.out.println("Numero certificati con tipo di conversione peggiore SubclassGood:\t"+numeroCertificatiSubclassGood+"\t("+numberFormat.format(PercentualeCertificatiSubclassGoodFraCorretti)+"% dei certificati tradotti correttamente)");
+        System.out.println("Numero certificati con tipo di conversione peggiore Subclass:\t\t"+numeroCertificatiSubclass+"\t("+numberFormat.format(PercentualeCertificatiSubclassFraCorretti)+"% dei certificati tradotti correttamente)");
         System.out.println("Numero certificati tradotti correttamente:\t\t\t\t"+numeroCertificatiTradottiCorrettamente);
 
         System.out.println("\n");
-        System.out.println("Dimensione media dei certificati convertiti correttamente:\t\t"+DimensioneMediaCertificatiConvertitiCorrettamente);
-        System.out.println("Dimensione media dei certificati scartati per mancanza di mapping:\t"+DimensioneMediaCertificatiScartatiPerNoMapping);
-        System.out.println("Dimensione media dei certificati scartati per codice inesistente:\t"+DimensioneMediaCertificatiScartatiPerCodiceInesistente);
-        System.out.println("Dimensione media di tutti i certificati:\t\t\t\t"+DimensioneMediaTuttiCertificati);
+        System.out.println("Dimensione media dei certificati convertiti correttamente:\t\t"+numberFormat.format(DimensioneMediaCertificatiConvertitiCorrettamente));
+        System.out.println("Dimensione media dei certificati scartati per mancanza di mapping:\t"+numberFormat.format(DimensioneMediaCertificatiScartatiPerNoMapping));
+        System.out.println("Dimensione media dei certificati scartati per codice inesistente:\t"+numberFormat.format(DimensioneMediaCertificatiScartatiPerCodiceInesistente));
+        System.out.println("Dimensione media di tutti i certificati:\t\t\t\t"+numberFormat.format(DimensioneMediaTuttiCertificati));
 
         System.out.println("\n");
-        System.out.println("Dimensione media dei certificati con tipo di conversione peggiore Equivalent:\t"+DimensioneMediaCertificatiEquivalent);
-        if(includeSG)System.out.println("Dimensione media dei certificati con tipo di conversione peggiore SubclassGood:\t"+DimensioneMediaCertificatiSubclassGood);
-        System.out.println("Dimensione media dei certificati con tipo di conversione peggiore Subclass:\t"+DimensioneMediaCertificatiSubclass);
+        System.out.println("Dimensione media dei certificati con tipo di conversione peggiore Equivalent:\t"+numberFormat.format(DimensioneMediaCertificatiEquivalent));
+        if(includeSG)System.out.println("Dimensione media dei certificati con tipo di conversione peggiore SubclassGood:\t"+numberFormat.format(DimensioneMediaCertificatiSubclassGood));
+        System.out.println("Dimensione media dei certificati con tipo di conversione peggiore Subclass:\t"+numberFormat.format(DimensioneMediaCertificatiSubclass));
 
         System.out.println("\n");
-        if(includeSG)System.out.println("Percentuale media del numero di codici di tipo SubclassGood nei certificati con tipo di conversione peggiore SubclassGood:\t"+PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood+"%");
-        System.out.println("Percentuale media del numero di codici di tipo Subclass nei certificati con tipo di conversione peggiore Subclass:\t\t"+PercentualeDiCodiciSubclassNeiCertificatiSubclass+"%");
+        if(includeSG)System.out.println("Percentuale media del numero di codici di tipo SubclassGood nei certificati con tipo di conversione peggiore SubclassGood:\t"+numberFormat.format(PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood)+"%");
+        System.out.println("Percentuale media del numero di codici di tipo Subclass nei certificati con tipo di conversione peggiore Subclass:\t\t"+numberFormat.format(PercentualeDiCodiciSubclassNeiCertificatiSubclass)+"%");
         System.out.println("");
 
         //scrivo sul file delle statistiche
         if(statsFile){
-            statWriter.write("Numero certificati tradotti correttamente:\t\t"+numeroCertificatiTradottiCorrettamente+"\t("+PercentualeCertificatiTradottiCorrettamente+"% sul totale)\n");
-            statWriter.write("Numero certificati scartati:\t\t\t\t"+numeroCertificatiScartati+"\t("+PercentualeCertificatiScartati+"% sul totale)\n");
-            statWriter.write("Numero certificati scartati per mancanza di mapping:\t"+numeroCertificatiScartatiPerNoMapping+"\t("+PercentualeCertificatiScartatiPerNoMappingFraScartati+"% dei certificati scartati)\n");
-            statWriter.write("Numero certificati scartati per codice inesistente:\t"+numeroCertificatiScartatiPerCodiceInesistente+"\t("+PercentualeCertificatiScartatiPerCodiceInesistenteFraScartati+"% dei certificati scartati)\n");
+            statWriter.write("Numero certificati tradotti correttamente:\t\t"+numeroCertificatiTradottiCorrettamente+"\t("+numberFormat.format(PercentualeCertificatiTradottiCorrettamente)+"% sul totale)\n");
+            statWriter.write("Numero certificati scartati:\t\t\t\t"+numeroCertificatiScartati+"\t("+numberFormat.format(PercentualeCertificatiScartati)+"% sul totale)\n");
+            statWriter.write("Numero certificati scartati per mancanza di mapping:\t"+numeroCertificatiScartatiPerNoMapping+"\t("+numberFormat.format(PercentualeCertificatiScartatiPerNoMappingFraScartati)+"% dei certificati scartati)\n");
+            statWriter.write("Numero certificati scartati per codice inesistente:\t"+numeroCertificatiScartatiPerCodiceInesistente+"\t("+numberFormat.format(PercentualeCertificatiScartatiPerCodiceInesistenteFraScartati)+"% dei certificati scartati)\n");
             statWriter.write("Numero certificati totali:\t\t\t\t"+numeroTotaleCertificati+"\n");
 
             statWriter.write("\n");
-            statWriter.write("Numero certificati con tipo di conversione peggiore Equivalent:\t\t"+numeroCertificatiEquivalent+"\t("+PercentualeCertificatiEquivalentFraCorretti+"% dei certificati tradotti correttamente)\n");
-            if(includeSG)statWriter.write("Numero certificati con tipo di conversione peggiore SubclassGood:\t"+numeroCertificatiSubclassGood+"\t("+PercentualeCertificatiSubclassGoodFraCorretti+"% dei certificati tradotti correttamente)\n");
-            statWriter.write("Numero certificati con tipo di conversione peggiore Subclass:\t\t"+numeroCertificatiSubclass+"\t("+PercentualeCertificatiSubclassFraCorretti+"% dei certificati tradotti correttamente)\n");
+            statWriter.write("Numero certificati con tipo di conversione peggiore Equivalent:\t\t"+numeroCertificatiEquivalent+"\t("+numberFormat.format(PercentualeCertificatiEquivalentFraCorretti)+"% dei certificati tradotti correttamente)\n");
+            if(includeSG)statWriter.write("Numero certificati con tipo di conversione peggiore SubclassGood:\t"+numeroCertificatiSubclassGood+"\t("+numberFormat.format(PercentualeCertificatiSubclassGoodFraCorretti)+"% dei certificati tradotti correttamente)\n");
+            statWriter.write("Numero certificati con tipo di conversione peggiore Subclass:\t\t"+numeroCertificatiSubclass+"\t("+numberFormat.format(PercentualeCertificatiSubclassFraCorretti)+"% dei certificati tradotti correttamente)\n");
             statWriter.write("Numero certificati tradotti correttamente:\t\t\t\t"+numeroCertificatiTradottiCorrettamente+"\n");
 
             statWriter.write("\n");
-            statWriter.write("Dimensione media dei certificati convertiti correttamente:\t\t"+DimensioneMediaCertificatiConvertitiCorrettamente+"\n");
-            statWriter.write("Dimensione media dei certificati scartati per mancanza di mapping:\t"+DimensioneMediaCertificatiScartatiPerNoMapping+"\n");
-            statWriter.write("Dimensione media dei certificati scartati per codice inesistente:\t"+DimensioneMediaCertificatiScartatiPerCodiceInesistente+"\n");
-            statWriter.write("Dimensione media di tutti i certificati:\t\t\t\t"+DimensioneMediaTuttiCertificati+"\n");
+            statWriter.write("Dimensione media dei certificati convertiti correttamente:\t\t"+numberFormat.format(DimensioneMediaCertificatiConvertitiCorrettamente)+"\n");
+            statWriter.write("Dimensione media dei certificati scartati per mancanza di mapping:\t"+numberFormat.format(DimensioneMediaCertificatiScartatiPerNoMapping)+"\n");
+            statWriter.write("Dimensione media dei certificati scartati per codice inesistente:\t"+numberFormat.format(DimensioneMediaCertificatiScartatiPerCodiceInesistente)+"\n");
+            statWriter.write("Dimensione media di tutti i certificati:\t\t\t\t"+numberFormat.format(DimensioneMediaTuttiCertificati)+"\n");
 
             statWriter.write("\n");
-            statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore Equivalent:\t"+DimensioneMediaCertificatiEquivalent+"\n");
-            if(includeSG)statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore SubclassGood:\t"+DimensioneMediaCertificatiSubclassGood+"\n");
-            statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore Subclass:\t"+DimensioneMediaCertificatiSubclass+"\n");
+            statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore Equivalent:\t"+numberFormat.format(DimensioneMediaCertificatiEquivalent)+"\n");
+            if(includeSG)statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore SubclassGood:\t"+numberFormat.format(DimensioneMediaCertificatiSubclassGood)+"\n");
+            statWriter.write("Dimensione media dei certificati con tipo di conversione peggiore Subclass:\t"+numberFormat.format(DimensioneMediaCertificatiSubclass)+"\n");
 
             statWriter.write("\n");
-            if(includeSG)statWriter.write("Percentuale media del numero di codici di tipo SubclassGood nei certificati con tipo di conversione peggiore SubclassGood:\t"+PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood+"%\n");
-            statWriter.write("Percentuale media del numero di codici di tipo Subclass nei certificati con tipo di conversione peggiore Subclass:\t\t"+PercentualeDiCodiciSubclassNeiCertificatiSubclass+"%\n");
+            if(includeSG)statWriter.write("Percentuale media del numero di codici di tipo SubclassGood nei certificati con tipo di conversione peggiore SubclassGood:\t"+numberFormat.format(PercentualeDiCodiciSubclassGoodNeiCertificatiSubclassGood)+"%\n");
+            statWriter.write("Percentuale media del numero di codici di tipo Subclass nei certificati con tipo di conversione peggiore Subclass:\t\t"+numberFormat.format(PercentualeDiCodiciSubclassNeiCertificatiSubclass)+"%\n");
         }
         statWriter.close();
 
